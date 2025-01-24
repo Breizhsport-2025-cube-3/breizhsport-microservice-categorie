@@ -1,9 +1,16 @@
 const { Sequelize } = require('sequelize');
+require('dotenv').config();
 
-// Configure la connexion à la base de données
-const sequelize = new Sequelize('nom_de_ta_base', 'utilisateur', 'mot_de_passe', {
-    host: 'localhost',
-    dialect: 'mysql', // Remplace par 'postgres' si tu utilises PostgreSQL
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
+    host: process.env.DB_HOST,
+    dialect: process.env.DB_DIALECT, // Assurez-vous que c'est 'mysql' pour MySQL
+    logging: false, // Désactive les logs SQL (optionnel)
+    pool: {
+        max: 10, // Nombre maximum de connexions dans le pool
+        min: 0,  // Nombre minimum de connexions dans le pool
+        acquire: 30000, // Temps maximum (en ms) pour acquérir une connexion
+        idle: 10000, // Temps maximum (en ms) pendant lequel une connexion peut être inactive
+    },
 });
 
 // Teste la connexion

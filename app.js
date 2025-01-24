@@ -2,8 +2,11 @@ const express = require('express');
 const sequelize = require('./config/db');
 const categorieRoutes = require('./routes/categorieRoutes');
 
+// Importez et initialisez le modèle Categorie
+const Categorie = require('./models/categories')(sequelize);
+
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 4001; // Ajoutez une valeur par défaut pour PORT
 
 // Middleware pour parser le JSON
 app.use(express.json());
@@ -13,9 +16,9 @@ app.use('/categories', categorieRoutes);
 
 // Synchronisation de la base de données et démarrage du serveur
 sequelize.sync()
-    .then(() => {
-        app.listen(PORT, () => {
-            console.log(`Serveur démarré sur http://localhost:${PORT}`);
-        });
-    })
-    .catch(err => console.error('Erreur de synchronisation avec la base de données:', err));
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Serveur démarré sur http://localhost:${PORT}`);
+    });
+  })
+  .catch(err => console.error('Erreur de synchronisation avec la base de données:', err));
