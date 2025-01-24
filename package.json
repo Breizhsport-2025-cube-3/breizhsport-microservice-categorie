@@ -1,0 +1,29 @@
+{
+  "name": "categorie-microservice",
+  "version": "1.0.0",
+  "description": "Microservice pour gérer les catégories",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "mysql2": "^3.12.0",
+    "sequelize": "^6.37.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Breizhsport-2025-cube-3/breizhsport-microservice-categorie.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Breizhsport-2025-cube-3/breizhsport-microservice-categorie/issues"
+  },
+  "homepage": "https://github.com/Breizhsport-2025-cube-3/breizhsport-microservice-categorie#readme"
+}
