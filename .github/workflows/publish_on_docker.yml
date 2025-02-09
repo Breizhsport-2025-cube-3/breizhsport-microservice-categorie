@@ -3,10 +3,12 @@ name: Build & Deploy Category Service
 on:
   push:
     branches:
-      - main
+      - master
+      - dev
   pull_request:
     branches:
-      - main
+      - master
+      - dev
 
 jobs:
   build-category-service:
@@ -32,7 +34,8 @@ jobs:
 
   publish-on-docker:
     needs: [build-category-service]
-    uses: Breizhsport-2025-cube-3/breizhsport-infra/.github/workflows/publish_on_docker.yml@main
+    if: github.ref == 'refs/heads/main'
+    uses: Breizhsport-2025-cube-3/breizhsport-infra/.github/workflows/publish_on_docker.yml@master
     secrets:
       tags: ${{ secrets.DOCKER_USERNAME }}/breizhsport-category:develop
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
