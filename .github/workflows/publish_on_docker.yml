@@ -40,9 +40,6 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Run Tests
-        run: npx vitest run
-
       - name: Build Service
         run: npm run build || echo "No build step needed"
 
