@@ -34,7 +34,7 @@ jobs:
 
   publish-on-docker:
     needs: [build-category-service]
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/master'
     uses: Breizhsport-2025-cube-3/breizhsport-infra/.github/workflows/publish_on_docker.yml@master
     secrets:
       tags: ${{ secrets.DOCKER_USERNAME }}/breizhsport-category:develop
