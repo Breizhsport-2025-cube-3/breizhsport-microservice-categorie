@@ -11,32 +11,46 @@ on:
       - dev
 
 jobs:
+  get-tag:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.get-tag-version.outputs.tag }}
+    steps:
+      - name: Set output
+        id: get-tag-version
+        run: |
+          if [[ "${GITHUB_REF}" == refs/heads/master ]]; then
+            echo "tag=latest" >> $GITHUB_OUTPUT
+          else
+            echo "tag=dev" >> $GITHUB_OUTPUT
+          fi
+
   build-category-service:
     runs-on: ubuntu-22.04
+    needs: [get-tag]
     steps:
-      # Étape 1 : Checkout du code
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # Étape 2 : Configuration de Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20.x
 
-      # Étape 3 : Installation des dépendances
       - name: Install Dependencies
         run: npm install
 
-      # Étape 4 : Build du service (si nécessaire)
+      - name: Run Tests
+        run: npx vitest run
+
       - name: Build Service
         run: npm run build || echo "No build step needed"
 
   publish-on-docker:
     needs: [build-category-service]
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev'
     uses: Breizhsport-2025-cube-3/breizhsport-infra/.github/workflows/publish_on_docker.yml@main
     secrets:
-      tags: ${{ secrets.DOCKER_USERNAME }}/breizhsport-category:develop
+      tags: ${{ secrets.DOCKER_USERNAME }}/breizhsport-category:${{ needs.get-tag.outputs.tag }}
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PAT: ${{ secrets.DOCKER_PAT }}
