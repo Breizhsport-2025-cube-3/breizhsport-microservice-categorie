@@ -6,7 +6,7 @@ const categorieRoutes = require('./routes/categorieRoutes');
 const Categorie = require('./models/categories')(sequelize);
 
 const app = express();
-const PORT = process.env.PORT || 4001; // Ajoutez une valeur par défaut pour PORT
+const PORT = process.env.PORT || 4003; // Ajoutez une valeur par défaut pour PORT
 
 // Middleware pour parser le JSON
 app.use(express.json());
