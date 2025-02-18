@@ -14,7 +14,7 @@ app.use(express.json());
 // Routes
 app.use('/categories', categorieRoutes);
 
-// Synchronisation de la base de données et démarrage du serveur
+// Synchronisation de la base de données et démarrage du serveur.
 sequelize.sync()
   .then(() => {
     app.listen(PORT, () => {
